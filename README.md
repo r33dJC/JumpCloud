@@ -2,10 +2,15 @@
 QA test - Reed H
 
 Bug 1
+
 Job Identifier - Not immediately returned.
+
 sevirity : low/moderate
+
 cc: head of engineering, pm, self
+
 OS: Ubuntu
+
 Version : 0c3d817
 
 Reproduce:
@@ -24,13 +29,18 @@ Attached:
 
 video of the issue. (would attach small clip of the behavior as seen in terminal)
 
---
+---
 
 Bug 2
+
 Graceful shutdown - not graceful.
+
 sevirity : high
+
 cc: head of engineering, pm, self
+
 OS: Ubuntu
+
 Version : 0c3d817
 
 Reproduce:
@@ -50,13 +60,18 @@ Attached:
 video of the issue. (would attach small clip of the behavior as seen in terminal)
 killafterpost.sh : script  used for testing.
 
---
+---
 
 Bug 3
+
 stats api - time not returned in miliseconds.
+
 sevirity : low/moderate
+
 cc: head of engineering, pm, self
+
 OS: Ubuntu
+
 Version : 0c3d817
 
 Reproduce:
@@ -82,13 +97,18 @@ Notes:
 ```
 This request returned in under a second, but by conversion shows it taking roughly 70 seconds. (can verify using postman)
 
---
+---
 
 Bug 4
+
 Job requests processed after shutdown.
+
 sevirity : moderate/high
+
 cc: head of engineering, pm, self
+
 OS: Ubuntu
+
 Version : 0c3d817
 
 Reproduce:
@@ -110,13 +130,18 @@ Attached:
 video of the issue. (would attach small clip of the behavior as seen in terminal)
 afterkill.sh : script used for testing.
 
--- 
+---
 
 Bug 5
+
 Stats api counter - not returning accurate count.
+
 sevirity : moderate
+
 cc: head of engineering, pm, self
+
 OS: Ubuntu
+
 Version : 0c3d817
 
 Will need to discuss with the Engineering and requirements team. It's unclear by the business requirements whether all api requests (post and get) to /hash should increment the counter or if only one of those should be used.
@@ -140,7 +165,7 @@ Attached:
 video of the issue. (would attach small clip of the behavior as seen in terminal)
 
 
---
+---
 
 Test Cases (built for linux)
 
@@ -175,6 +200,7 @@ PORT     STATE SERVICE
 ```
 {"TotalRequests":0,"AverageTime":0}
 ```
+---
 
 TC 02
 Verify sending a password to the /hash api is working as intended.
@@ -188,6 +214,8 @@ Expected Results:
 A job identifier is returned immediately. We will verify the hashing was successfull in another test. After five seconds has passed the password should be available for viewing through a Get request to the /hash api.
 
 The /stats api counter should be incremented by 1.
+
+---
 
 TC 03
 Verify a Get to the /hash api with a job number returns a base64 encoded SHA512 hash of the password. This will be an extension from the previous test.
@@ -213,6 +241,8 @@ echo -n angrymonkey | openssl dgst -binary -sha512 | openssl base64
 
 The output generated here should match what is returned by the Get api request. (it doesn't)
 
+---
+
 TC 04
 Verify a Get to /stats returns the correct information.
 
@@ -226,6 +256,8 @@ The returned data will look as follows:
 ```
 {"TotalRequests":1,"AverageTime":266835}
 ```
+
+---
 
 TC 05
 
@@ -241,6 +273,8 @@ The application should handle all job requests sent. We can verify this by check
 
 Attachments
 - loop.sh
+
+---
 
 TC 06
 
